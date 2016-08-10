@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">自动抢红包</string>
+    <string name="service_description">@string/user_tips</string>
+    <string name="user_tips">
+        使用提示：\n1，目前是debug版本，插件服务不太稳定，容易被系统杀死，需要经常重启，另外不锁屏状态下不容易被杀死\n2，当处于聊天界面时，如果当前聊天窗口出现红包，无法自动打开\n3，回到桌面、留在消息列表页、或其他聊天窗口时可以自动完成抢红包的全部流程\n4，抢到红包进入详情页后会自动退回到列表页，部分手机只能回到聊天界面，需手动点击返回键
+    </string>
+</resources>
