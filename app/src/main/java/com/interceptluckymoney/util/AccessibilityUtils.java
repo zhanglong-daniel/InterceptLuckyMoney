@@ -1,5 +1,9 @@
 package com.interceptluckymoney.util;
 
+import java.util.List;
+
+import android.util.Log;
+import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 
 /**
@@ -19,5 +23,19 @@ public class AccessibilityUtils {
         } else {
             performClick(nodeInfo.getParent());
         }
+    }
+
+    /**
+     * 判断是否是红包通知
+     *
+     * @return
+     */
+    public static boolean isLuckyMoneyNotify(AccessibilityEvent event) {
+        List<CharSequence> texts = event.getText();
+        if (texts.isEmpty()) {
+            return false;
+        }
+        String text = String.valueOf(texts.get(0));
+        return text.contains("[微信红包]");
     }
 }

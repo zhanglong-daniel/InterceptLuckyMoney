@@ -4,7 +4,10 @@ import com.interceptluckymoney.service.InterceptLuckyMoneyService;
 import com.interceptluckymoney.util.Constants;
 import com.interceptluckymoney.util.Utils;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Looper;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
