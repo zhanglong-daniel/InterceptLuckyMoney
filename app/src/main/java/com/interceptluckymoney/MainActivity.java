@@ -1,19 +1,13 @@
 package com.interceptluckymoney;
 
-import java.util.List;
-
 import com.interceptluckymoney.service.InterceptLuckyMoneyService;
 import com.interceptluckymoney.util.Constants;
 import com.interceptluckymoney.util.Utils;
 
-import android.app.ActivityManager;
-import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -37,7 +31,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onResume() {
         super.onResume();
         updateRunningState();
-        getForegroundActivity();
     }
 
     private void initViews() {
@@ -79,33 +72,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * 打开辅助服务的设置
      */
     private void openAccessibilityServiceSettings() {
-//        try {
-//            Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
-//            intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-//            startActivity(intent);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-        Intent intent = new Intent();
-        intent.setClassName("com.android.settings","com.android.settings.Settings$AccessibilitySettingsActivity");
-        startActivity(intent);
-
-    }
-
-    private Handler mHandler = new Handler();
-
-    private void getForegroundActivity() {
-        Log.e("fuck", "================================================");
-        ActivityManager am = (ActivityManager) this.getSystemService(Context.ACTIVITY_SERVICE);
-        List<ActivityManager.RunningTaskInfo> list = am.getRunningTasks(3);
-        for (ActivityManager.RunningTaskInfo info : list) {
-            Log.e("fuck", "activity = " + info.topActivity.toString());
+        try {
+            Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            startActivity(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                getForegroundActivity();
-            }
-        }, 2000);
     }
+
 }
