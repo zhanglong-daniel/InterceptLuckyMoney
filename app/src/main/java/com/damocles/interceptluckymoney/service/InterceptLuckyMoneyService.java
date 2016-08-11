@@ -1,10 +1,10 @@
-package com.interceptluckymoney.service;
+package com.damocles.interceptluckymoney.service;
 
 import java.util.List;
 
-import com.interceptluckymoney.util.AccessibilityUtils;
-import com.interceptluckymoney.MainActivity;
-import com.interceptluckymoney.util.Utils;
+import com.damocles.interceptluckymoney.util.AccessibilityUtils;
+import com.damocles.interceptluckymoney.MainActivity;
+import com.damocles.interceptluckymoney.util.Utils;
 
 import android.accessibilityservice.AccessibilityService;
 import android.app.Notification;

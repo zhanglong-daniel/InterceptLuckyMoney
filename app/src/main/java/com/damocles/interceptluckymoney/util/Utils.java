@@ -1,4 +1,4 @@
-package com.interceptluckymoney.util;
+package com.damocles.interceptluckymoney.util;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;

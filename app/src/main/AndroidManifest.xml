@@ -1,23 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.interceptluckymoney">
+          package="com.damocles.interceptluckymoney">
 
-    <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
-    <uses-permission android:name="android.permission.GET_TASKS"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="android.permission.BROADCAST_PACKAGE_ADDED"/>
-    <uses-permission android:name="android.permission.BROADCAST_PACKAGE_CHANGED"/>
-    <uses-permission android:name="android.permission.BROADCAST_PACKAGE_INSTALL"/>
-    <uses-permission android:name="android.permission.BROADCAST_PACKAGE_REPLACED"/>
-    <uses-permission android:name="android.permission.RESTART_PACKAGES"/>
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
 
     <application
             android:allowBackup="true"
@@ -26,8 +16,14 @@
             android:supportsRtl="true"
             android:persistent="true"
             android:theme="@style/AppTheme">
+
+        <!--mta平台注册的appkey-->
+        <meta-data android:name="TA_APPKEY" android:value="${TA_APPKEY}"/>
+        <!--mta平台使用的渠道号-->
+        <meta-data android:name="InstallChannel" android:value="${InstallChannel}"/>
+
         <activity
-                android:name=".MainActivity"
+                android:name="com.damocles.interceptluckymoney.MainActivity"
                 android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -38,7 +34,7 @@
 
         <service
                 android:label="@string/app_name"
-                android:name=".service.InterceptLuckyMoneyService"
+                android:name="com.damocles.interceptluckymoney.service.InterceptLuckyMoneyService"
                 android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
             <intent-filter android:priority="1000">
                 <action android:name="android.accessibilityservice.AccessibilityService"/>

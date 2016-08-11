@@ -1,4 +1,4 @@
-package com.interceptluckymoney.util;
+package com.damocles.interceptluckymoney.util;
 
 /**
  * Created by danielzhang on 16/2/15.

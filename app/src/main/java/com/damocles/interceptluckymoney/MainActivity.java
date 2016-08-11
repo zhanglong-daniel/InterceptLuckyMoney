@@ -1,13 +1,11 @@
-package com.interceptluckymoney;
+package com.damocles.interceptluckymoney;
 
-import com.interceptluckymoney.service.InterceptLuckyMoneyService;
-import com.interceptluckymoney.util.Constants;
-import com.interceptluckymoney.util.Utils;
+import com.damocles.interceptluckymoney.service.InterceptLuckyMoneyService;
+import com.damocles.interceptluckymoney.util.Constants;
+import com.damocles.interceptluckymoney.util.Utils;
+import com.tencent.stat.StatService;
 
-import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
-import android.os.Looper;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -33,7 +31,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
+        StatService.onResume(this);
         updateRunningState();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        StatService.onPause(this);
     }
 
     private void initViews() {
@@ -64,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.main_btn_open_accessibility_service:
+                StatService.trackCustomEvent(this, "button");
                 openAccessibilityServiceSettings();
                 break;
             default:

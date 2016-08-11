@@ -1,8 +1,7 @@
-package com.interceptluckymoney.util;
+package com.damocles.interceptluckymoney.util;
 
 import java.util.List;
 
-import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 
