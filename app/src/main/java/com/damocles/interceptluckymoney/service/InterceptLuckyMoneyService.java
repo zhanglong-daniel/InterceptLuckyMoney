@@ -23,7 +23,7 @@ import android.widget.Toast;
  */
 public class InterceptLuckyMoneyService extends AccessibilityService {
 
-    private static final String LOG_TAG = "intercept_lucky_money";
+    private static final String LOG_TAG = "lucky_money";
 
     /**
      * 服务是否在运行
@@ -114,8 +114,8 @@ public class InterceptLuckyMoneyService extends AccessibilityService {
         }
         // 是红包消息，但当前屏幕关闭，tts提醒
         if (!Utils.isScreenOn(this)) {
-            // TODO:tts提醒
-            Log.e(LOG_TAG, "收到红包消息，但屏幕关闭，忽略");
+            Utils.luckyMoneyNotify(this);
+            Log.e(LOG_TAG, "收到红包消息，但处于锁屏状态，提醒用户");
             return;
         }
         // 收到红包消息通知，且屏幕亮起，执行通知点击动作

@@ -2,6 +2,7 @@ package com.damocles.interceptluckymoney.util;
 
 import java.util.List;
 
+import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 
@@ -35,6 +36,7 @@ public class AccessibilityUtils {
             return false;
         }
         String text = String.valueOf(texts.get(0));
+        Log.e("lucky_money", "收到新消息：" + text);
         return text.contains("[微信红包]");
     }
 }
