@@ -5,14 +5,13 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.damocles.interceptluckymoney.MainActivity">
+        tools:context="com.damocles.interceptluckymoney.AboutActivity">
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
         <android.support.v7.widget.Toolbar
-                android:id="@+id/main_toolbar"
+                android:id="@+id/about_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorPrimary"
@@ -22,53 +21,46 @@
                 android:layout_height="wrap_content"
                 android:background="@color/colorPrimary">
             <TextView
-                    android:id="@+id/main_title_txt"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:textSize="18sp"
                     android:textColor="@color/colorTextTitle"
                     android:gravity="center"
-                    android:text="@string/app_name"/>
+                    android:text="关于"/>
             <ImageButton
-                    android:id="@+id/main_title_btn_more"
+                    android:id="@+id/about_btn_back"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:layout_alignParentRight="true"
                     android:scaleType="fitXY"
                     android:background="@drawable/main_title_btn_bg_selector"
-                    android:src="@mipmap/ic_more"/>
+                    android:src="@mipmap/ic_back"/>
         </RelativeLayout>
         <View
                 android:layout_width="match_parent"
                 android:layout_height="4dp"
                 android:background="@drawable/shadow"/>
 
+        <ImageView
+                android:layout_width="104dp"
+                android:layout_height="104dp"
+                android:src="@mipmap/about_logo"
+                android:layout_gravity="center_horizontal"
+                android:scaleType="fitXY"
+                android:layout_marginTop="44dp"/>
 
         <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_marginTop="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_height="wrap_content"
-                android:textColor="#cc000000"
-                android:textSize="15sp"
-                android:text="使用说明"/>
-
-
-        <TextView
-                android:id="@+id/main_txt_tips"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="13sp"
-                android:lineSpacingExtra="12dp"
+                android:layout_height="0dp"
+                android:layout_weight="1.0"
                 android:textColor="#80000000"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:text="@string/user_tips"/>
+                android:layout_gravity="center_horizontal"
+                android:textSize="14sp"
+                android:text="自动抢红包v1.0版本"/>
     </LinearLayout>
+
     <Button
-            android:id="@+id/main_btn_open_accessibility_service"
+            android:id="@+id/about_btn_feedback"
             android:layout_width="216dp"
             android:layout_height="44dp"
             android:layout_marginTop="444dp"
@@ -76,11 +68,11 @@
             style="?android:attr/borderlessButtonStyle"
             android:textColor="@color/colorTextButton"
             android:textSize="16sp"
-            android:text="开启服务"
+            android:text="意见反馈"
             android:background="@drawable/main_btn_bg_selector"/>
 
     <TextView
-            android:layout_below="@id/main_btn_open_accessibility_service"
+            android:layout_below="@id/about_btn_feedback"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
@@ -88,20 +80,4 @@
             android:textColor="#33000000"
             android:textSize="12sp"
             android:text="本服务仅供娱乐，请提高网速，多攒人品"/>
-
-    <FrameLayout
-            android:id="@+id/main_layout_toast"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark">
-        <TextView
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:drawableLeft="@mipmap/ic_ok"
-                android:paddingLeft="8dp"
-                android:textSize="18sp"
-                android:textColor="@color/colorTextTitle"
-                android:gravity="center_vertical"
-                android:text="自动抢红包已开启"/>
-    </FrameLayout>
 </RelativeLayout>

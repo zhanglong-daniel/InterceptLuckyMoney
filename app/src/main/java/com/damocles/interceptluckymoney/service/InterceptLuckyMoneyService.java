@@ -9,6 +9,7 @@ import com.damocles.interceptluckymoney.util.Utils;
 import android.accessibilityservice.AccessibilityService;
 import android.app.Notification;
 import android.app.PendingIntent;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
@@ -16,14 +17,13 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
-import android.widget.Toast;
 
 /**
  * Created by danielzhang on 16/2/14.
  */
 public class InterceptLuckyMoneyService extends AccessibilityService {
 
-    private static final String LOG_TAG = "lucky_money";
+    private static final String LOG_TAG = "lucky_money_service";
 
     /**
      * 服务是否在运行
@@ -67,8 +67,9 @@ public class InterceptLuckyMoneyService extends AccessibilityService {
         Log.e(LOG_TAG, "onServiceConnected()");
         super.onServiceConnected();
         isRunning = true;
-        MainActivity.updateRunningState();
-        Toast.makeText(this, "自动抢红包服务已开启", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
     @Override
@@ -76,8 +77,7 @@ public class InterceptLuckyMoneyService extends AccessibilityService {
         Log.e(LOG_TAG, "onDestroy()");
         super.onDestroy();
         isRunning = false;
-        MainActivity.updateRunningState();
-        Toast.makeText(this, "自动抢红包服务已关闭", Toast.LENGTH_SHORT).show();
+        MainActivity.getInstance().updateRunningState();
     }
 
     @Override
@@ -112,23 +112,21 @@ public class InterceptLuckyMoneyService extends AccessibilityService {
         if (!isLuckyMoneyNotify) {
             return;
         }
-        // 是红包消息，但当前屏幕关闭，tts提醒
-        if (!Utils.isScreenOn(this)) {
-            Utils.luckyMoneyNotify(this);
-            Log.e(LOG_TAG, "收到红包消息，但处于锁屏状态，提醒用户");
-            return;
-        }
+        // 是红包消息，提醒用户
+        Utils.luckyMoneyNotify(this);
         // 收到红包消息通知，且屏幕亮起，执行通知点击动作
-        Notification notification = (Notification) event.getParcelableData();
-        PendingIntent pendingIntent = notification.contentIntent;
-        try {
-            isReceiving = true;
-            pendingIntent.send();
-            mHandler.postDelayed(autoClickLuckyMoneyMsgRunnable, 500L);
-        } catch (PendingIntent.CanceledException e) {
-            e.printStackTrace();
-            Log.e(LOG_TAG, "执行红包notify消息点击动作失败");
-            isReceiving = false;
+        if (Utils.isScreenOn(this)) {
+            Notification notification = (Notification) event.getParcelableData();
+            PendingIntent pendingIntent = notification.contentIntent;
+            try {
+                isReceiving = true;
+                pendingIntent.send();
+                mHandler.postDelayed(autoClickLuckyMoneyMsgRunnable, 500L);
+            } catch (PendingIntent.CanceledException e) {
+                e.printStackTrace();
+                Log.e(LOG_TAG, "执行红包notify消息点击动作失败");
+                isReceiving = false;
+            }
         }
     }
 
@@ -252,12 +250,18 @@ public class InterceptLuckyMoneyService extends AccessibilityService {
 
     private void doubleBack() {
         performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);
+        backDelay(500L);
+        backDelay(1000L);
+    }
+
+    private void backDelay(long delayMillis) {
+        performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);
             }
-        }, 500L);
+        }, delayMillis);
     }
 
     private Runnable autoClickLuckyMoneyMsgRunnable = new Runnable() {

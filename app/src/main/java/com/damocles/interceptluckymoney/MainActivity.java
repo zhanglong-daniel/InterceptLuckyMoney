@@ -5,89 +5,108 @@ import com.damocles.interceptluckymoney.util.Constants;
 import com.damocles.interceptluckymoney.util.Utils;
 import com.tencent.stat.StatService;
 
+import android.animation.ObjectAnimator;
 import android.content.Intent;
+import android.os.Handler;
 import android.provider.Settings;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
-import android.view.Window;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends BaseActivity implements View.OnClickListener {
 
-    private Toolbar toolbar;
-    private static TextView stateTextView;
+    private static MainActivity sInstance;
 
+    public static MainActivity getInstance() {
+        return sInstance;
+    }
+
+    private ImageButton moreImageButton;
     private Button button;
-    private ImageView bottomImageView;
+    private FrameLayout toastLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        sInstance = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initViews();
-        Window window = getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        showToast();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        StatService.onResume(this);
         updateRunningState();
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        StatService.onPause(this);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            moveTaskToBack(false);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     private void initViews() {
-        toolbar = Utils.initToolbar(this, R.id.main_toolbar);
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                new AboutDialog(MainActivity.this).show();
-                return true;
-            }
-        });
-        stateTextView = (TextView) findViewById(R.id.main_txt_state);
+        // toolbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        int statusBarHeight = Utils.getStatusBarHeight(this);
+        LinearLayout.LayoutParams params =
+                new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, statusBarHeight);
+        toolbar.setLayoutParams(params);
+        setSupportActionBar(toolbar);
+        // toast layout
+        toastLayout = (FrameLayout) findViewById(R.id.main_layout_toast);
+        ViewGroup.LayoutParams lp = toastLayout.getLayoutParams();
+        lp.width = ViewGroup.LayoutParams.MATCH_PARENT;
+        lp.height = statusBarHeight + Utils.dp2Px(this, 48);
+        toastLayout.setLayoutParams(lp);
+        toastLayout.setPadding(0, statusBarHeight, 0, 0);
+        toastLayout.setVisibility(View.GONE);
+        // more button
+        moreImageButton = (ImageButton) findViewById(R.id.main_title_btn_more);
+        moreImageButton.setOnClickListener(this);
+        // button
         button = (Button) findViewById(R.id.main_btn_open_accessibility_service);
         button.setOnClickListener(this);
-        bottomImageView = (ImageView) findViewById(R.id.image_bottom);
-        LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) bottomImageView.getLayoutParams();
-        lp.width = LinearLayout.LayoutParams.MATCH_PARENT;
-        lp.height = Utils.getScreenWidth(this) * 208 / 360;
-        bottomImageView.setLayoutParams(lp);
-        bottomImageView.setScaleType(ImageView.ScaleType.FIT_XY);
         updateRunningState();
     }
 
-    public static void updateRunningState() {
-        if (stateTextView != null) {
+    public void updateRunningState() {
+        if (button != null) {
             boolean isRunning = InterceptLuckyMoneyService.getRunningState();
-            stateTextView.setText("服务运行状态：" + (isRunning ? "开启" : "关闭"));
+            if (isRunning) {
+                button.setText("关闭服务");
+            } else {
+                button.setText("开启服务");
+            }
         }
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.main_title_btn_more:
+                new MoreDialog(this).show();
+                break;
             case R.id.main_btn_open_accessibility_service:
                 StatService.trackCustomEvent(this, "button");
                 if (!Utils.isAppInstalled(this, "com.tencent.mm")) {
@@ -118,6 +137,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(intent);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private void showToast() {
+        boolean isRunning = InterceptLuckyMoneyService.getRunningState();
+        if (isRunning) {
+            toastLayout.setPivotY(0.0f);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    ObjectAnimator.ofFloat(toastLayout, View.SCALE_Y, 0.0f, 1.0f).setDuration(300).start();
+                    toastLayout.setVisibility(View.VISIBLE);
+                }
+            }, 500);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    ObjectAnimator.ofFloat(toastLayout, View.SCALE_Y, 1.0f, 0.0f).setDuration(300).start();
+                    toastLayout.setVisibility(View.VISIBLE);
+                }
+            }, 2500);
+        } else {
+            toastLayout.setVisibility(View.GONE);
         }
     }
 

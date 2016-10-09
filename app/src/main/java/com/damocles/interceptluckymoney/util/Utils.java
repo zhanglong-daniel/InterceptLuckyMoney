@@ -23,23 +23,6 @@ import android.widget.LinearLayout;
  */
 public class Utils {
 
-    public static Toolbar initToolbar(Activity activity, int id) {
-        Toolbar toolbar = (Toolbar) activity.findViewById(id);
-        int statusBarHeight = getStatusBarHeight(activity);
-        int w = LinearLayout.LayoutParams.MATCH_PARENT;
-        int h = (int) (activity.getResources().getDisplayMetrics().density * 48);
-        if (Build.VERSION.SDK_INT > 19) {
-            toolbar.setPadding(0, statusBarHeight, 0, 0);
-            h += statusBarHeight;
-        }
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(w, h);
-        toolbar.setLayoutParams(params);
-        if (activity instanceof AppCompatActivity) {
-            ((AppCompatActivity) activity).setSupportActionBar(toolbar);
-        }
-        return toolbar;
-    }
-
     public static int getStatusBarHeight(Activity activity) {
         int statusBarHeight = 0;
         try {
@@ -54,8 +37,30 @@ public class Utils {
         return statusBarHeight;
     }
 
+    public static int getNavigationBarHeight(Activity activity) {
+        int navigationHeight = 0;
+        try {
+            Class<?> c = Class.forName("com.android.internal.R$dimen");
+            Object obj = c.newInstance();
+            Field field = c.getField("navigation_bar_height");
+            int id = Integer.parseInt(field.get(obj).toString());
+            navigationHeight = activity.getResources().getDimensionPixelSize(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return navigationHeight;
+    }
+
     public static int getScreenWidth(Context context) {
         return context.getResources().getDisplayMetrics().widthPixels;
+    }
+
+    public static float getDensity(Context context) {
+        return context.getResources().getDisplayMetrics().density;
+    }
+
+    public static int dp2Px(Context context, int dp) {
+        return (int) (dp * getDensity(context));
     }
 
     /**
@@ -149,21 +154,26 @@ public class Utils {
      * 红包通知（语音，震动，静音）
      */
     public static void luckyMoneyNotify(Context context) {
-        if (true) {
-            final MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.notify);
-            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                @Override
-                public void onCompletion(MediaPlayer mp) {
-                    if (mediaPlayer != null) {
-                        mediaPlayer.release();
+        if (SharedPreferencesUtil.getInstance().getNotifySwitch(context)) {
+            // vibrate
+            if (SharedPreferencesUtil.getInstance().getVibrateSwitch(context)) {
+                Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+                long[] pattern = new long[] {300, 800, 300, 800};
+                vibrator.vibrate(pattern, -1);
+            }
+            // sound
+            if (SharedPreferencesUtil.getInstance().getSoundSwitch(context)) {
+                final MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.notify);
+                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        if (mediaPlayer != null) {
+                            mediaPlayer.release();
+                        }
                     }
-                }
-            });
-            mediaPlayer.start();
-        } else {
-            Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-            long[] pattern = new long[] {300, 800, 300, 800};
-            vibrator.vibrate(pattern, -1);
+                });
+                mediaPlayer.start();
+            }
         }
     }
 

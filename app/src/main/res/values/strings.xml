@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">自动抢红包</string>
     <string name="service_description">@string/user_tips</string>
-    <string
-            name="user_tips">1，“自动抢红包”辅助服务开启时，会自动打开红包\n2，手机锁屏后，不会自动打开红包\n3，处于微信对话界面时，不会自动打开红包\n4，自己发送的红包不会自动打开\n5，本工具仅供娱乐，抢红包主要拼的是网速和人品
+    <string name="user_tips">
+        1. 请保持app运行，并开启“自动抢红包”辅助服务\n2. 自己发送的红包，需手动点击红包后才会自动打开\n3. 处于微信对话界面时，需手动点击红包后才会自动打开\n4.
+        手机锁屏时，可以设置红包消息提醒，但不会打开红包
     </string>
 </resources>
