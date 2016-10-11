@@ -5,7 +5,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context="com.damocles.interceptluckymoney.LauncherActivity" >
+        tools:context="com.damocles.interceptluckymoney.LauncherActivity">
 
     <TextView
             android:id="@+id/launcher_txt_skip"
@@ -18,5 +18,13 @@
             android:textSize="12sp"
             android:textColor="#ffffffff"
             android:text="3S跳转"/>
+
+    <!--<ImageView-->
+            <!--android:id="@+id/launcher_img"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:layout_marginTop="480dp"-->
+            <!--android:src="@drawable/launcher_btn_selector"/>-->
 
 </RelativeLayout>

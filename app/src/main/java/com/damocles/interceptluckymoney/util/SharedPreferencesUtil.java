@@ -47,6 +47,14 @@ public class SharedPreferencesUtil {
         return getBoolean(context, "switch_sound", true);
     }
 
+    public boolean getFirstOpen(Context context) {
+        boolean firstOpen = getBoolean(context, "first_open", true);
+        if (firstOpen) {
+            putBoolean(context, "first_open", false);
+        }
+        return firstOpen;
+    }
+
     private void putBoolean(Context context, String key, boolean value) {
         initSharedPreferences(context);
         sharedPreferences.edit().putBoolean(key, value).commit();

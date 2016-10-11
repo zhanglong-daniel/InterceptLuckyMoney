@@ -157,7 +157,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     ObjectAnimator.ofFloat(toastLayout, View.SCALE_Y, 1.0f, 0.0f).setDuration(300).start();
                     toastLayout.setVisibility(View.VISIBLE);
                 }
-            }, 2500);
+            }, 3000);
         } else {
             toastLayout.setVisibility(View.GONE);
         }
