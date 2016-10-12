@@ -1,6 +1,7 @@
 package com.damocles.interceptluckymoney;
 
 import com.damocles.interceptluckymoney.util.Utils;
+import com.tencent.stat.StatService;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -22,9 +23,11 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.about_btn_back:
+                StatService.trackCustomEvent(this, "about_back");
                 finish();
                 break;
             case R.id.about_btn_feedback:
+                StatService.trackCustomEvent(this, "about_feedback");
                 Intent data = new Intent(Intent.ACTION_SENDTO);
                 data.setData(Uri.parse("mailto:damocles2016@126.com"));
                 data.putExtra(Intent.EXTRA_SUBJECT, "《自动抢红包》意见反馈");

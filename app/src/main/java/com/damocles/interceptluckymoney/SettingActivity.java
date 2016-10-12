@@ -2,6 +2,7 @@ package com.damocles.interceptluckymoney;
 
 import com.damocles.interceptluckymoney.util.SharedPreferencesUtil;
 import com.damocles.interceptluckymoney.util.Utils;
+import com.tencent.stat.StatService;
 
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
@@ -38,6 +39,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.setting_btn_back:
+                StatService.trackCustomEvent(this, "setting_back");
                 finish();
                 break;
             case R.id.setting_layout_notify:
@@ -79,6 +81,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         notifySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                StatService.trackCustomEvent(SettingActivity.this, "setting_notify", String.valueOf(isChecked));
                 sharedPreferencesUtil.putNotifySwitch(SettingActivity.this, isChecked);
                 detailLayout.setVisibility(View.VISIBLE);
                 detailLayout.setPivotY(0.0f);
@@ -98,6 +101,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         vibrateSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                StatService.trackCustomEvent(SettingActivity.this, "setting_vibrate", String.valueOf(isChecked));
                 sharedPreferencesUtil.putVibrateSwitch(SettingActivity.this, isChecked);
             }
         });
@@ -110,6 +114,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         soundSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                StatService.trackCustomEvent(SettingActivity.this, "setting_sound", String.valueOf(isChecked));
                 sharedPreferencesUtil.putSoundSwitch(SettingActivity.this, isChecked);
             }
         });

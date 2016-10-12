@@ -7,7 +7,7 @@ android {
     defaultConfig {
         applicationId "com.damocles.interceptluckymoney"
         minSdkVersion 16
-        targetSdkVersion 23
+        targetSdkVersion 22
         versionCode 1
         versionName "1.0"
     }
@@ -24,10 +24,10 @@ android {
 
     signingConfigs {
         release {
-            storeFile file("keystore/debug.keystore")
-            storePassword "android"
-            keyAlias "androiddebugkey"
-            keyPassword "android"
+            storeFile file("keystore/damocles.jks")
+            storePassword "b36df082cd"
+            keyAlias "damocles"
+            keyPassword "cd83fdace3"
         }
 
         debug {
@@ -48,7 +48,7 @@ android {
 
             manifestPlaceholders = [
                     "TA_APPKEY"     : "ANV6SZBY987T",
-                    "InstallChannel": "myapp"
+                    "InstallChannel": "default"
             ]
         }
 

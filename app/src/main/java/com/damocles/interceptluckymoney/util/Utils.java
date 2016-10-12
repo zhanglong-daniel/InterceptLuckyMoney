@@ -1,5 +1,9 @@
 package com.damocles.interceptluckymoney.util;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 
 import com.damocles.interceptluckymoney.R;
@@ -8,15 +12,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.os.Build;
 import android.os.PowerManager;
 import android.os.Vibrator;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.widget.LinearLayout;
 
 /**
  * Created by danielzhang on 16/2/14.
@@ -61,6 +60,32 @@ public class Utils {
 
     public static int dp2Px(Context context, int dp) {
         return (int) (dp * getDensity(context));
+    }
+
+    /**
+     * 读取assets中的channel，获得app渠道号
+     */
+    public static String getChannel(Context context) {
+        InputStream inputStream = null;
+        String channel = null;
+        try {
+            inputStream = context.getAssets().open("channel");
+            int size = inputStream.available();
+            byte[] buffer = new byte[size];
+            inputStream.read(buffer);
+            channel = new String(buffer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (inputStream != null) {
+                    inputStream.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return channel;
     }
 
     /**

@@ -105,17 +105,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.main_title_btn_more:
+                StatService.trackCustomEvent(this, "main_more");
                 new MoreDialog(this).show();
                 break;
             case R.id.main_btn_open_accessibility_service:
-                StatService.trackCustomEvent(this, "button");
+                StatService.trackCustomEvent(this, "main_button");
                 if (!Utils.isAppInstalled(this, "com.tencent.mm")) {
+                    StatService.trackCustomEvent(this, "wechat_uninstalled");
                     Toast.makeText(this, "尚未安装微信客户端", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 // 只支持微信740及以上版本号
                 int wechatVersion = Utils.getWechatVersion(this);
                 if (wechatVersion < Constants.MIN_WECHAT_VERSION_SUPPORTED) {
+                    StatService.trackCustomEvent(this, "wechat_outdated");
                     Toast.makeText(this, "当前微信版本过低，请升级到最新版本", Toast.LENGTH_SHORT).show();
                 } else {
                     openAccessibilityServiceSettings();

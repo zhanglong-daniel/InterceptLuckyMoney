@@ -4,6 +4,7 @@
 package com.damocles.interceptluckymoney;
 
 import com.damocles.interceptluckymoney.util.Utils;
+import com.tencent.stat.StatService;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -56,10 +57,12 @@ public class MoreDialog implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.dialog_more_setting:
+                StatService.trackCustomEvent(mActivity, "dialog_setting");
                 mDialog.cancel();
                 mActivity.startActivity(new Intent(mActivity, SettingActivity.class));
                 break;
             case R.id.dialog_more_about:
+                StatService.trackCustomEvent(mActivity, "dialog_about");
                 mDialog.cancel();
                 mActivity.startActivity(new Intent(mActivity, AboutActivity.class));
                 break;
