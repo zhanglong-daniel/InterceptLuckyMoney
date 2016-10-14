@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/InterceptLuckyMoney.iml" filepath="$PROJECT_DIR$/InterceptLuckyMoney.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/gdt/gdt.iml" filepath="$PROJECT_DIR$/gdt/gdt.iml" />
     </modules>
   </component>
 </project>
