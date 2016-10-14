@@ -57,7 +57,7 @@ public class SharedPreferencesUtil {
 
     private void putBoolean(Context context, String key, boolean value) {
         initSharedPreferences(context);
-        sharedPreferences.edit().putBoolean(key, value).commit();
+        sharedPreferences.edit().putBoolean(key, value).apply();
     }
 
     private boolean getBoolean(Context context, String key, boolean defValue) {
