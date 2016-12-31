@@ -102,6 +102,6 @@
                 android:textSize="18sp"
                 android:textColor="@color/colorTextTitle"
                 android:gravity="center_vertical"
-                android:text="自动抢红包已开启"/>
+                android:text="抢红包服务已开启"/>
     </FrameLayout>
 </RelativeLayout>

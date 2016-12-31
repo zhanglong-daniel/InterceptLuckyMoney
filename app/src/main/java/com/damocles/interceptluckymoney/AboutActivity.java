@@ -30,7 +30,7 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener 
                 StatService.trackCustomEvent(this, "about_feedback");
                 Intent data = new Intent(Intent.ACTION_SENDTO);
                 data.setData(Uri.parse("mailto:damocles2016@126.com"));
-                data.putExtra(Intent.EXTRA_SUBJECT, "《自动抢红包》意见反馈");
+                data.putExtra(Intent.EXTRA_SUBJECT, "《红包助手》意见反馈");
                 startActivity(data);
                 break;
             default:
