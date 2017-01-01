@@ -7,21 +7,19 @@ import com.tencent.stat.StatService;
 
 import android.animation.ObjectAnimator;
 import android.content.Intent;
-import android.os.Handler;
-import android.provider.Settings;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.provider.Settings;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
@@ -36,12 +34,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private Button button;
     private FrameLayout toastLayout;
 
+    private Handler handler = new Handler(Looper.getMainLooper());
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         sInstance = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initViews();
+        handler.post(pollRunnable);
     }
 
     @Override
@@ -54,6 +55,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     protected void onResume() {
         super.onResume();
         updateRunningState();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        handler.removeCallbacks(pollRunnable);
     }
 
     @Override
@@ -165,5 +172,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             toastLayout.setVisibility(View.GONE);
         }
     }
+
+    private Runnable pollRunnable = new Runnable() {
+        @Override
+        public void run() {
+            Log.e("MainActivity", "poll runnable");
+            handler.postDelayed(pollRunnable, 10 * 1000);
+        }
+    };
 
 }
