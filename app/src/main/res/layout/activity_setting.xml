@@ -1,70 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         tools:context="com.damocles.interceptluckymoney.AboutActivity">
-    <android.support.v7.widget.Toolbar
-            android:id="@+id/setting_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            app:titleTextColor="@color/colorPrimary"/>
-    <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary">
-        <TextView
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:textSize="18sp"
-                android:textColor="@color/colorTextTitle"
-                android:gravity="center"
-                android:text="设置"/>
-        <ImageButton
-                android:id="@+id/setting_btn_back"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:scaleType="fitXY"
-                android:background="@drawable/main_title_btn_bg_selector"
-                android:src="@mipmap/ic_back"/>
-    </RelativeLayout>
-
-
-    <RelativeLayout
-            android:id="@+id/setting_layout_notify"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:paddingLeft="16dp"
-            android:background="#ffffffff">
-
-        <View android:layout_width="match_parent"
-              android:layout_height="1dp"
-              android:layout_alignParentBottom="true"
-              android:background="#ffe6e6e6"/>
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:textSize="16sp"
-                android:textColor="#cc000000"
-                android:text="红包消息提醒"/>
-        <Switch
-                android:id="@+id/setting_switch_notify"
-                android:layout_width="40dp"
-                android:layout_height="20dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="16dp"
-                android:thumb="@mipmap/switch_thumb"
-                android:track="@drawable/switch_track_selector"
-                android:layout_centerVertical="true"/>
-    </RelativeLayout>
 
     <LinearLayout
             android:id="@+id/setting_layout_detail"
+            android:layout_below="@+id/setting_layout_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -137,4 +82,68 @@
                     android:layout_centerVertical="true"/>
         </RelativeLayout>
     </LinearLayout>
-</LinearLayout>
+
+    <LinearLayout
+           android:id="@+id/setting_layout_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        <android.support.v7.widget.Toolbar
+                android:id="@+id/setting_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                app:titleTextColor="@color/colorPrimary"/>
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary">
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:textSize="18sp"
+                    android:textColor="@color/colorTextTitle"
+                    android:gravity="center"
+                    android:text="设置"/>
+            <ImageButton
+                    android:id="@+id/setting_btn_back"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:scaleType="fitXY"
+                    android:background="@drawable/main_title_btn_bg_selector"
+                    android:src="@mipmap/ic_back"/>
+        </RelativeLayout>
+
+
+        <RelativeLayout
+                android:id="@+id/setting_layout_notify"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:paddingLeft="16dp"
+                android:background="#ffffffff">
+
+            <View android:layout_width="match_parent"
+                  android:layout_height="1dp"
+                  android:layout_alignParentBottom="true"
+                  android:background="#ffe6e6e6"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:textSize="16sp"
+                    android:textColor="#cc000000"
+                    android:text="红包消息提醒"/>
+            <Switch
+                    android:id="@+id/setting_switch_notify"
+                    android:layout_width="40dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="16dp"
+                    android:thumb="@mipmap/switch_thumb"
+                    android:track="@drawable/switch_track_selector"
+                    android:layout_centerVertical="true"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+
+</RelativeLayout>

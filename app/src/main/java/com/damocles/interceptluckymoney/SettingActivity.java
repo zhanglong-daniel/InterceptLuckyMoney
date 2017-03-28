@@ -8,6 +8,8 @@ import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -83,12 +85,25 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 StatService.trackCustomEvent(SettingActivity.this, "setting_notify", String.valueOf(isChecked));
                 sharedPreferencesUtil.putNotifySwitch(SettingActivity.this, isChecked);
-                detailLayout.setVisibility(View.VISIBLE);
-                detailLayout.setPivotY(0.0f);
+                // detailLayout.setVisibility(View.VISIBLE);
+                // detailLayout.setPivotY(0.0f);
                 if (isChecked) {
-                    ObjectAnimator.ofFloat(detailLayout, View.SCALE_Y, 0.0f, 1.0f).setDuration(250).start();
+                    // ObjectAnimator.ofFloat(detailLayout, View.SCALE_Y, 0.0f, 1.0f).setDuration(250).start();
+                    TranslateAnimation showAnimation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
+                            Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
+                            -1.0f, Animation.RELATIVE_TO_SELF, 0.0f);
+                    showAnimation.setDuration(300);
+                    detailLayout.startAnimation(showAnimation);
+                    detailLayout.setVisibility(View.VISIBLE);
                 } else {
-                    ObjectAnimator.ofFloat(detailLayout, View.SCALE_Y, 1.0f, 0.0f).setDuration(250).start();
+                    // ObjectAnimator.ofFloat(detailLayout, View.SCALE_Y, 1.0f, 0.0f).setDuration(250).start();
+                    TranslateAnimation hiddenAnimation = new TranslateAnimation(Animation.RELATIVE_TO_SELF,
+                            0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
+                            Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
+                            -1.0f);
+                    hiddenAnimation.setDuration(300);
+                    detailLayout.startAnimation(hiddenAnimation);
+                    detailLayout.setVisibility(View.GONE);
                 }
             }
         });
