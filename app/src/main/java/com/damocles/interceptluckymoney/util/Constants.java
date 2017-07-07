@@ -22,7 +22,7 @@ public class Constants {
     /**
      * 红包开启界面Activity类名
      */
-    public static final String ACTIVITY_NAME_LUCKY_MONEY = "com.tencent.mm.plugin.luckymoney.ui.LuckyMoneyReceiveUI";
+    public static final String ACTIVITY_NAME_LUCKY_MONEY = "com.tencent.mm.plugin.luckymoney.ui.En_fba4b94f";
 
     /**
      * 红包详情页面Activity类名
